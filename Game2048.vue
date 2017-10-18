@@ -10,7 +10,8 @@
 					 v-for="(grid, columnIndex) in row">
 					<div class="grid-bg" :style="{backgroundColor:dynastyList[grid.dynasty].backgroundColor}"></div>
 					<text class="grid-text"
-						  :style="{color:dynastyList[grid.dynasty].titleColor, fontSize:titleSize(dynastyList[grid.dynasty].title)}"
+						  v-if="grid.dynasty!=0"
+						  :style="{fontSize:dynastyList[grid.dynasty].titleFont}"
 					>{{dynastyList[grid.dynasty].title}}</text>
 				</div>
 			</div>
@@ -42,32 +43,26 @@
 			dynastyList:[
 				{
 				  	title: '',
-					titleColor: 'white',
 					backgroundColor: '#CCBFB2'
 				},
 			    {
 			        title: '夏',
-					titleColor: 'white',
 					backgroundColor: '#EDE2DB'
 				},
 				{
 					title: '商',
-					titleColor: 'white',
 					backgroundColor: '#EADDC6'
 				},
 				{
 					title: '周',
-					titleColor: 'white',
 					backgroundColor: '#FAEBD7'
 				},
 				{
 					title: '秦',
-					titleColor: 'white',
 					backgroundColor: '#F5F5DC'
 				},
 				{
 					title: '汉',
-					titleColor: 'white',
 					backgroundColor: '#FFE4C4'
 				},
 				{
@@ -77,57 +72,46 @@
 				},
 				{
 					title: '晋',
-					titleColor: 'white',
 					backgroundColor: '#D2691E'
 				},
 				{
 					title: '南北朝',
-					titleColor: 'white',
 					backgroundColor: '#FF7F50'
 				},
 				{
 					title: '隋',
-					titleColor: 'white',
 					backgroundColor: '#B8860B'
 				},
 				{
 					title: '唐',
-					titleColor: 'white',
 					backgroundColor: '#BDB76B'
 				},
 				{
 					title: '五代十国',
-					titleColor: 'white',
 					backgroundColor: '#FF8C00'
 				},
 				{
 					title: '宋',
-					titleColor: 'white',
 					backgroundColor: '#E9967A'
 				},
 				{
 					title: '元',
-					titleColor: 'white',
 					backgroundColor: '#B22222'
 				},
 				{
 					title: '明',
-					titleColor: 'white',
 					backgroundColor: '#FF69B4'
 				},
 				{
 					title: '清',
-					titleColor: 'white',
 					backgroundColor: '#CD5C5C'
 				},
 				{
 					title: '民国',
-					titleColor: 'white',
 					backgroundColor: '#FF4500'
 				},
 				{
 					title: '大天朝',
-					titleColor: 'white',
 					backgroundColor: '#FF0000'
 				}
 			]
@@ -143,7 +127,7 @@
 			},
 		    titleSize: function (title) {
 				if (title.length >= this.fontSizeList.length) {
-				    return this.fontSizeList[this.fontSizeList.length-1]+'px'
+				    return this.fontSizeList[this.fontSizeList.length-1]
 				}
 				return this.fontSizeList[title.length]
 			},
@@ -408,6 +392,11 @@
 			}
 		},
         created: function () {
+			for (var i in this.dynastyList) {
+			    var dynasty = this.dynastyList[i]
+				dynasty.titleFont = this.titleSize(dynasty.title)
+			}
+
 			this.resetGame()
         }
     }
@@ -470,7 +459,7 @@
 		bottom: 2wx;
 	}
 	.grid-text {
-
+		color: white;
 	}
 	.reset-button {
 		font-size: 30wx;
